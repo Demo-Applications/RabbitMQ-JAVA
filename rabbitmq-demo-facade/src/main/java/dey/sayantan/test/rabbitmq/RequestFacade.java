@@ -18,7 +18,7 @@ public class RequestFacade extends HttpServlet {
 
 	
 	public RequestFacade() throws IOException, TimeoutException {
-		requestHandler = new RequestHandler(); //s
+		requestHandler = new RequestHandler(); 
 	}
 
 	@Override
