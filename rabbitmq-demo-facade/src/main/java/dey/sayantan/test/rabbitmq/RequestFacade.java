@@ -39,7 +39,7 @@ public class RequestFacade extends HttpServlet {
 
 	}
 
-	private Double calculate(Double param1, String operation, Double param2) throws IOException {
+	private Double calculate(Double param1, String operation, Double param2) throws IOException, TimeoutException {
 		Double calculationResult;
 		switch (operation) {
 		case "ADD":

@@ -13,7 +13,6 @@ import com.rabbitmq.client.ConnectionFactory;
 
 public class RequestHandler {
 	ConnectionFactory factory;
-	Channel channel;
 
 	public RequestHandler() throws IOException, TimeoutException {
 		factory = new ConnectionFactory();
@@ -22,20 +21,24 @@ public class RequestHandler {
 
 	private void initialize() throws IOException, TimeoutException {
 		factory.setHost("localhost");
-		//factory.setPort(15672);
+		// factory.setPort(15672);
 		factory.setUsername("test");
 		factory.setPassword("test");
 		Connection connection = factory.newConnection();
-		channel = connection.createChannel();
+		Channel channel = connection.createChannel();
 		channel.queueDeclare("addQueue", false, false, false, null);
 		channel.queueDeclare("divQueue", false, false, false, null);
+		channel.close();
+		connection.close();
 	}
 
-	public Double add(Double param1, Double param2) throws IOException {
+	public Double add(Double param1, Double param2) throws IOException, TimeoutException {
 		Double addResult = null;
-		byte[] body = getBody(param1, param2);
-		channel.basicPublish("", "addQueue", null, body);
-		return param2;
+		try (Connection connection = factory.newConnection();Channel channel = connection.createChannel()) {
+			byte[] body = getBody(param1, param2);
+			channel.basicPublish("", "addQueue", null, body);
+			return param2;
+		}
 	}
 
 	public Double divide(Double param1, Double param2) {
@@ -57,7 +60,7 @@ public class RequestHandler {
 		// Write the car "parameter 1":{}
 		generator.writeObjectField("param1", param1);
 		// Write the car "parameter 2":{}
-		generator.writeObjectField("param2", param1);
+		generator.writeObjectField("param2", param2);
 		// Close the object
 		generator.writeEndObject();
 		// And the generator
