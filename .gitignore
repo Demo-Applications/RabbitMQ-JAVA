@@ -1,0 +1,11 @@
+target/
+.settings
+.project
+.classpath
+*.iml
+.idea
+raml/
+generate.bat
+raml-to-jax-rs.jar
+node_modules/
+.launch
