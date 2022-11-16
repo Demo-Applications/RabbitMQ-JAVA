@@ -9,7 +9,7 @@
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<jackson.version>2.10.3</jackson.version>
+		<jackson.version>2.12.7.1</jackson.version>
 		<javax-servlet-api.version>4.0.1</javax-servlet-api.version>
 		<amqp-client.version>5.8.0</amqp-client.version>
 	</properties>
